@@ -3,6 +3,9 @@ This is my todo list and some useful materials
 
 ## 2020-7-20
 
+### Tasks
+* [ ] Check out GANs for sequential data modeling 
+
 ### Reading
 
 #### Papers related to video action recognition
