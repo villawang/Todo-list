@@ -53,7 +53,7 @@ Code: [Official PyTorch](https://github.com/microsoft/Swin-Transformer)
 <p align="center"><img src="./images/video_transformers/swin_transformer.png" width="600px"></img>
 
 ### Overview
-Direct transforming the transformer from langauge tasks to vision tasks causes problems such as heavy computation due to long patch tokens. This paper tackles this side by **reducing length of patch tokens** at each stage by concatenating them to channel dimension as seen in Fig. 3. This can be achieved by partitioning patches into several windows i.e., window multi-head self-attention (W-MSA), in which self-attention is applied inside windows and parameters are shared by different windows.  
+Direct transforming the transformer from langauge tasks to vision tasks causes problems such as heavy computation due to long patch tokens. This paper tackles this side by 1) **reducing length of patch tokens** patch merging layer concatenates the features of each group of $2\times 2$ neighboring patches, and applies a linear layer on the 4C-dimensional concatenated features, and 2) self-attention computation in the partitioned windows as seen in Fig. 3. The second operation can be achieved by partitioning patches into several windows i.e., window multi-head self-attention (W-MSA), in which self-attention is applied inside windows and parameters are shared by different windows.  
 
 ### Shifted Windows
 Splitted window operation is able to significantly reduce the computation, but it only focuses on the local attention and ignores the global field. The author overcome this by adding a shifted window multi-head self-attention (SW-MSA) after a W-MSA block. As seen in Fig. 2, each window in Layer 1 is shifted by $\pm\delta$ in the next layer. The extra computation is caused by this operation since there are 9 tokens compared to 4 tokens in the previous stage. The authors proposes the cyclic shift as seen in Fig. 4 to avoid this extra computation. The A, B, and C are moved to the down right, which now construct four windows same as pervious W-MSA. The calculated self-attention can be masked before the output.
@@ -62,4 +62,16 @@ Splitted window operation is able to significantly reduce the computation, but i
 
 ## [Video Swin Transformer](https://arxiv.org/pdf/2106.13230.pdf)
 Code: [Official](https://github.com/SwinTransformer/Video-Swin-Transformer)
+<p align="center"><img src="./images/video_transformers/video_swin_transformer.png" width="600px"></img>
+### Overview
+Video Swin Transformer is proposed beyond [Swin Transformer](https://arxiv.org/pdf/2103.14030.pdf) proposed for images. The main modification of Video Swin Transformer is replacing the 2D shifted window by using the 3D shifted window as seen in Fig. 3. Also the input video is first processed by a 3D convolution to get path tokens, which can be noticed that input sequence is downsampled by two regarding the temporal dimension.
+
+<p align="center"><img src="./images/video_transformers/video_swin_transformer2.png" width="600px"></img>
+
+### Some Thoughts
+1) Even the Video Swin Transformer has achieved the SOTA in several benchmarking results, the computation is still very heavy. The self-attention computation inside the 3D local window is $(\frac{T}{2})^2$ times of Swin Transformer. Is that possible to do the self-attention by treating spatial and temproal aspects separately. 
+
+2) The 3D shifted window seems do not boost the performance that much in ablation study. Only 0.3% better than using the original Swin Transformer. 
+
+3) Does Video Swin Transformer good enough to catch the long-term temporal information?
 
