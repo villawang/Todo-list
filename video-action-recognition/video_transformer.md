@@ -62,7 +62,9 @@ Splitted window operation is able to significantly reduce the computation, but i
 
 ## [Video Swin Transformer](https://arxiv.org/pdf/2106.13230.pdf)
 Code: [Official](https://github.com/SwinTransformer/Video-Swin-Transformer)
+
 <p align="center"><img src="./images/video_transformers/video_swin_transformer.png" width="600px"></img>
+
 ### Overview
 Video Swin Transformer is proposed beyond [Swin Transformer](https://arxiv.org/pdf/2103.14030.pdf) proposed for images. The main modification of Video Swin Transformer is replacing the 2D shifted window by using the 3D shifted window as seen in Fig. 3. Also the input video is first processed by a 3D convolution to get path tokens, which can be noticed that input sequence is downsampled by two regarding the temporal dimension.
 
