@@ -1,6 +1,6 @@
 Video Transformers Paper and Notes
 =======
-## Best view exporting .md to PDF
+## Best view by exporting .md to PDF or in .md editor such as VScode, MacDown in order to support Math formula
 # Some Transformer basics
 1. [3W字长文带你轻松入门视觉transformer](https://zhuanlan.zhihu.com/p/308301901) (Chinese)
 
@@ -96,7 +96,19 @@ Code: [Official](https://github.com/whai362/PVT)
 Improved version PVT by introducing **overlapping patch embedding**. As seen in Fig. 1, PVTv2 increases kernel size in 2D convolution layer from $P$ to $2P-1$, and keeps the stride unchanged ($P$). Zero padding is applied (padding size is $P-1$). This overlappng operation works very similar to the shifted window operation in Swin Transformer, which aims to get interaction between pixels in each neighbouring patches.
 
 
+## [(ICCV 2021) VidTr: Video Transformer Without Convolutions](https://arxiv.org/pdf/2104.11746.pdf)
 
+Code: To be added 
+
+<p align="center"><img src="./images/video_transformers/VidTr.png" width="600px"></img>
+
+### Overview
+Similar to [ViT](https://arxiv.org/pdf/2010.11929.pdf) and [Perceiver]((https://arxiv.org/pdf/2103.03206.pdf)), VidTr is a convolution free Transformer backbone. The core part of VidTr is similar to other Video Transformers i.e., to reduce the **self-attention computation** in spatio-temporal domain.
+
+### Problems and Solutions
+Given an extra dimension $T$ upon the image, the spatio-temporal attention computation is $O(T^2\times H^2\times W^2)$, which is $T^2$ times of images regarding ViT. As seen in Fig. 2, VidTr adopts separable attention $MSA(S)=MSA_s(MSA_t(S))$. Moreover, the temporal dimension is downsampled (downsample strategy can be referred in Table 4(d) in the original paper) in the temporal attention from $T$ to $\tau$, which decreases self-attention computation in ViT from $O(T^2\times H^2\times W^2)$ to $O(\tau^2+H^2\times W^2)$. The overall modification is straightforward and Kinetics results are close to the hierarchical Transformer family (i.e., PVT, Swin Transformer). 
+
+However, the performance on SSv2 is worse than normal 2D CNN + efficient module design strategies, which indicates the temporal modelling ability in VidTr is sort of limited.
 
 
 
