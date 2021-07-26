@@ -53,7 +53,7 @@ Code: [Official PyTorch](https://github.com/microsoft/Swin-Transformer)
 <p align="center"><img src="./images/video_transformers/swin_transformer.png" width="600px"></img>
 
 ### Overview
-Direct transforming the transformer from langauge tasks to vision tasks causes problems such as heavy computation due to long patch tokens. This paper tackles this side by 1) **reducing length of patch tokens** patch merging layer concatenates the features of each group of $2\times 2$ neighboring patches, and applies a linear layer on the 4C-dimensional concatenated features, and 2) self-attention computation in the partitioned windows as seen in Fig. 3. The second operation can be achieved by partitioning patches into several windows i.e., window multi-head self-attention (W-MSA), in which self-attention is applied inside windows and parameters are shared by different windows.  
+Direct transforming the transformer from langauge tasks to vision tasks causes problems such as heavy computation due to long patch tokens. This paper tackles this side by 1) patch merging layer concatenates the features of each group of $2\times 2$ neighboring patches to reduce resolution in a hierarchical manner (**reduce the patch token length**), and applies a linear layer on the 4C-dimensional concatenated features, and 2) self-attention computation in the partitioned windows as seen in Fig. 3. The second operation can be achieved by partitioning patches into several windows i.e., window multi-head self-attention (W-MSA), in which self-attention is applied inside windows and parameters are shared by different windows.  
 
 ### Shifted Windows
 Splitted window operation is able to significantly reduce the computation, but it only focuses on the local attention and ignores the global field. The author overcome this by adding a shifted window multi-head self-attention (SW-MSA) after a W-MSA block. As seen in Fig. 2, each window in Layer 1 is shifted by $\pm\delta$ in the next layer. The extra computation is caused by this operation since there are 9 tokens compared to 4 tokens in the previous stage. The authors proposes the cyclic shift as seen in Fig. 4 to avoid this extra computation. The A, B, and C are moved to the down right, which now construct four windows same as pervious W-MSA. The calculated self-attention can be masked before the output.
@@ -76,4 +76,29 @@ Video Swin Transformer is proposed beyond [Swin Transformer](https://arxiv.org/p
 2) The 3D shifted window seems do not boost the performance that much in ablation study. Only 0.3% better than using the original Swin Transformer. 
 
 3) Does Video Swin Transformer good enough to catch the long-term temporal information?
+
+## [Pyramid Vision Transformer: A Versatile Backbone for Dense Prediction without Convolutions](https://arxiv.org/pdf/2102.12122.pdf)
+Code: [Official](https://github.com/whai362/PVT)
+
+<p align="center"><img src="./images/video_transformers/PVT.png" width="600px"></img>
+
+### Overview
+Unlike the recently-proposed Transformer model (e.g., ViT) that is specially designed for image classification, Pyramid Vision Transformer (PVT) is designed similar to Swin Transformer in a hierarchical manner to overcome the difficulties of porting Transformer to various dense prediction tasks. As seen in Fig. 3, it can be seen that feature map is reduced at each stage, which is able to 1) reduce feature map resolution, and 2) reduce the computation when computing the self-attention. It should be noted that each **Patch Emb** operation contains a 2D convolution layer to reduce the feature map. In order to reduce the self-attention computation, **Spatial Reduction** is applied before the Multi-head Attention. 
+
+## [Improved Pyramid Vision Transformer](https://arxiv.org/pdf/2106.13797.pdf)
+Code: [Official](https://github.com/whai362/PVT)
+
+[Explaination](https://mp.weixin.qq.com/s?__biz=MzUxNjcxMjQxNg%3D%3D&chksm=f9a11932ced690247c151ea5355bb654d5dd10ece8bb5d09f7ccf360f88233453881ae7ca81c&idx=3&mid=2247527357&scene=21&sn=4260af27ae82651d59f9dce179bc03b5#wechat_redirect)
+
+<p align="center"><img src="./images/video_transformers/PVTv2.png" width="400px"></img>
+
+### Overview
+Improved version PVT by introducing **overlapping patch embedding**. As seen in Fig. 1, PVTv2 increases kernel size in 2D convolution layer from $P$ to $2P-1$, and keeps the stride unchanged ($P$). Zero padding is applied (padding size is $P-1$). This overlappng operation works very similar to the shifted window operation in Swin Transformer, which aims to get interaction between pixels in each neighbouring patches.
+
+
+
+
+
+
+
 
