@@ -58,7 +58,7 @@ Direct transforming the transformer from langauge tasks to vision tasks causes p
 ### Shifted Windows
 Splitted window operation is able to significantly reduce the computation, but it only focuses on the local attention and ignores the global field. The author overcome this by adding a shifted window multi-head self-attention (SW-MSA) after a W-MSA block. As seen in Fig. 2, each window in Layer 1 is shifted by $\pm\delta$ in the next layer. The extra computation is caused by this operation since there are 9 tokens compared to 4 tokens in the previous stage. The authors proposes the cyclic shift as seen in Fig. 4 to avoid this extra computation. The A, B, and C are moved to the down right, which now construct four windows same as pervious W-MSA. The calculated self-attention can be masked before the output.
 
-<p align="center"><img src="./images/video_transformers/swin_transformer2.png" width="250px"></img>  <img src="./images/video_transformers/swin_transformer3.png" width="400px"></img>
+<p align="center"><img src="./images/video_transformers/swin_transformer2.png" width="400px"></img>  <img src="./images/video_transformers/swin_transformer3.png" width="400px"></img>
 
 ## [Video Swin Transformer](https://arxiv.org/pdf/2106.13230.pdf)
 Code: [Official](https://github.com/SwinTransformer/Video-Swin-Transformer)
