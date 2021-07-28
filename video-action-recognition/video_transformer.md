@@ -45,7 +45,7 @@ This paper introduces a general transformer model *Perceiver* with few architect
 It can be noticed the iterative learning mentioned above is very computationally expensive regarding the cross attention between (Q, K, V). Suppose we have $K,V\in \mathbb{R}^{M\times D}$ and $Q\in \mathbb{R}^{M\times C}$, softmax$(QK^\top)V$ is $O(M^2)$. A $224\times 224\times 3$ image input will have $M$~150k. So this work project (Q, K, V) into lower dimension $N$ firstly. Then do the cross attention operation. The output is fed to the next latent transformer (do the self-attention).
 
 
-## [Swin Transformer: Hierarchical Vision Transformer using Shifted Windows](https://arxiv.org/pdf/2103.14030.pdf)
+## [(MSRA) Swin Transformer: Hierarchical Vision Transformer using Shifted Windows](https://arxiv.org/pdf/2103.14030.pdf)
 Code: [Official PyTorch](https://github.com/microsoft/Swin-Transformer)
 
 [Explaination: SOTA模型Swin Transformer是如何炼成的](https://zhuanlan.zhihu.com/p/376486858)
@@ -60,7 +60,7 @@ Splitted window operation is able to significantly reduce the computation, but i
 
 <p align="center"><img src="./images/video_transformers/swin_transformer2.png" width="400px"></img>  <img src="./images/video_transformers/swin_transformer3.png" width="400px"></img>
 
-## [Video Swin Transformer](https://arxiv.org/pdf/2106.13230.pdf)
+## [(MSRA) Video Swin Transformer](https://arxiv.org/pdf/2106.13230.pdf)
 Code: [Official](https://github.com/SwinTransformer/Video-Swin-Transformer)
 
 <p align="center"><img src="./images/video_transformers/video_swin_transformer.png" width="600px"></img>
@@ -110,6 +110,23 @@ Given an extra dimension $T$ upon the image, the spatio-temporal attention compu
 
 However, the performance on SSv2 is worse than normal 2D CNN + efficient module design strategies, which indicates the temporal modelling ability in VidTr is sort of limited.
 
+## [(DAMO Alibaba) An Image is Worth 16x16 Words, What is a Video Worth?](https://arxiv.org/pdf/2103.13915.pdf)
+
+Code: [Official PyTorch](https://github.com/Alibaba-MIIL/STAM), [lucidrains](https://github.com/lucidrains/STAM-pytorch)
+
+<p align="center"><img src="./images/video_transformers/STAM.png" width="600px"></img>
+
+### Overview
+Similar to [TimeSformer](https://arxiv.org/pdf/2102.05095.pdf), this works focuses on spatio-temporal modelling for Transformer architecture and propose the Space Time Attention Model (STAM). In [TimeSformer](https://arxiv.org/pdf/2102.05095.pdf), the authors performed a temporal attention followed by a spatial attention in a sequential manner. In this work, the authors argue that temporal Transformer performing beyond the spatial embbeinding is able to fully activate sequential modelling ability for the Transformer. Different from previous works, this work first extract spatial embedding for each patch in each frame and temporal Transformer is **only** applied before the classfication head **instead of mixing temporal and spatial modelling in each layer in Transformer**. In details, the main pipeline of STAM is $\mathbf{X}\to $spatial Transformer $\to$ linearly projected onto a patch embedding space $\to$ temporal Transformer. The overall computation of the self-attention is $O(FN^2+F^2)$, where $F$ is the number of frames and $N$ is the number of pathes in each frame.
+
+### Some Thoughts
+* The idea of this work is good and pretty makes sense to me i.e., barrow the Transformer's strong sequention ablity beyond the spatial embedding. It is pretty like treats spatial Transformer like ordinary CNN backbone to extract features and then reason the temporal information for those extracted features. This is able to avoid that ***a series of 3D-convolutions can learn long-term interactions due to increased receptive ﬁeld, they are biased towards local ones***.
+* More studies can be carried out regarding the temporal datasets such SSv2. 
+
+
+
+
+## [(Google) ViViT: A Video Vision Transformer](https://arxiv.org/pdf/2103.15691.pdf)
 
 
 
