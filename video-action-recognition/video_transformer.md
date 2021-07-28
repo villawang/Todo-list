@@ -130,6 +130,8 @@ Similar to [TimeSformer](https://arxiv.org/pdf/2102.05095.pdf), this works focus
 
 Code: [Unofficial PyTorch](https://github.com/rishikksh20/ViViT-pytorch)
 
+[Explaination](https://zhuanlan.zhihu.com/p/365228484)
+
 <p align="center"><img src="./images/video_transformers/ViViT.png" width="600px"></img>
 
 ### Overview
@@ -157,7 +159,7 @@ This works propose several, efficient variants of our model which factorise the 
 
 ### Some Conclusion
 The authors find that the **Model 1** performs best on large-scale datasets such as K400 but tends to overfit more on smaller datasets. The **Model 1** requires more computation compared to others. It can be seen that [STAM](https://arxiv.org/pdf/2103.13915.pdf) style seems to be more efficient i.e., good accuracy and lighter computation.
-	<p align="center"><img src="./images/video_transformers/ViViT_5.png" width="400px"></img>
+	<p align="center"><img src="./images/video_transformers/ViViT_5.png" width="500px"></img>
 
 
 
