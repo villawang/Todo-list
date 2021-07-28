@@ -110,7 +110,7 @@ Given an extra dimension $T$ upon the image, the spatio-temporal attention compu
 
 However, the performance on SSv2 is worse than normal 2D CNN + efficient module design strategies, which indicates the temporal modelling ability in VidTr is sort of limited.
 
-## [(DAMO Alibaba) An Image is Worth 16x16 Words, What is a Video Worth?](https://arxiv.org/pdf/2103.13915.pdf)
+## [*(DAMO Alibaba) An Image is Worth 16x16 Words, What is a Video Worth?](https://arxiv.org/pdf/2103.13915.pdf)
 
 Code: [Official PyTorch](https://github.com/Alibaba-MIIL/STAM), [lucidrains](https://github.com/lucidrains/STAM-pytorch)
 
@@ -126,7 +126,38 @@ Similar to [TimeSformer](https://arxiv.org/pdf/2102.05095.pdf), this works focus
 
 
 
-## [(Google) ViViT: A Video Vision Transformer](https://arxiv.org/pdf/2103.15691.pdf)
+## [*(Google) ViViT: A Video Vision Transformer](https://arxiv.org/pdf/2103.15691.pdf)
+
+Code: [Unofficial PyTorch](https://github.com/rishikksh20/ViViT-pytorch)
+
+<p align="center"><img src="./images/video_transformers/ViViT.png" width="600px"></img>
+
+### Overview
+
+This works propose several, efficient variants of our model which factorise the spatial and temporal dimensions of the input. 
+
+* Patch Embedding
+
+	First, the authors compare two sampling approaches as seen in Fig. 2 and Fig. 3. The uniform frame sampling is to embed each 2D frame independently using the same method as ViT, and and concatenate all these tokens together. In terms of the tubelet embedding, it extracts non-overlapping, spatio-temporal “tubes” from the input volume, and to linearly project this to $\mathbb{R}^d$. This method fuses spatio-temporal information during tokenisation, in contrast to “Uniform frame sampling” where temporal information from different frames is fused by the transformer.
+
+<p align="center"><img src="./images/video_transformers/ViViT_sampling.png" width="400px"></img>
+
+* Transformer Variants
+
+	1) **Model 1: Spatio-temporal attention** &nbsp; &nbsp; This model simply forwards all spatio-temporal tokens extracted from the video, which is the same as "Joint Space-Time model" in [TimeSformer](https://arxiv.org/pdf/2102.05095.pdf). 
+	
+	2) **Model 2: Factorised encoder** &nbsp; &nbsp; As seen in Fig. 4, this can treated similarly as [STAM](https://arxiv.org/pdf/2103.13915.pdf).
+<p align="center"><img src="./images/video_transformers/ViViT_2.png" width="600px"></img>
+
+	3) **Model 3: Factorised self-attention** &nbsp; &nbsp; This model, in contrast, contains the same number of transformer layers as Model 1. However, instead of computing multi-headed self-attention across all pairs of tokens, $\mathbf{z}^l$, at layer $l$, the authors factorise the operation to first only compute self-attention spatially (among all tokens extracted from the same temporal index), and then temporally (among all tokens extracted from the same spatial index) as shown in Fig. 5, which is [TimeSformer](https://arxiv.org/pdf/2102.05095.pdf) reversing the order of temporal attention and spatial attention.
+<p align="center"><img src="./images/video_transformers/ViViT_3.png" width="600px"></img>
+
+	4) **Model 4: Factorised dot-product attention** &nbsp; &nbsp; Finally, the authors develop a model which has the same computational complexity as Models 2 and 3, while retaining the same number of parameters as the unfactorised Model 1 as seen Fig. 5. Concretely, the authors compute attention weights for each token separately over the spatialand temporal-dimensions using different heads, then concatenate spatial self-attention and temporal self-attention outputs. 
+	<p align="center"><img src="./images/video_transformers/ViViT_4.png" width="600px"></img>
+
+### Some Conclusion
+The authors find that the **Model 1** performs best on large-scale datasets such as K400 but tends to overfit more on smaller datasets. The **Model 1** requires more computation compared to others. It can be seen that[STAM](https://arxiv.org/pdf/2103.13915.pdf) seems to be more efficient i.e., good accuracy and lighter computation.
+	<p align="center"><img src="./images/video_transformers/ViViT_5.png" width="400px"></img>
 
 
 
