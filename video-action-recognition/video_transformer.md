@@ -156,7 +156,7 @@ This works propose several, efficient variants of our model which factorise the 
 	<p align="center"><img src="./images/video_transformers/ViViT_4.png" width="600px"></img>
 
 ### Some Conclusion
-The authors find that the **Model 1** performs best on large-scale datasets such as K400 but tends to overfit more on smaller datasets. The **Model 1** requires more computation compared to others. It can be seen that[STAM](https://arxiv.org/pdf/2103.13915.pdf) seems to be more efficient i.e., good accuracy and lighter computation.
+The authors find that the **Model 1** performs best on large-scale datasets such as K400 but tends to overfit more on smaller datasets. The **Model 1** requires more computation compared to others. It can be seen that [STAM](https://arxiv.org/pdf/2103.13915.pdf) style seems to be more efficient i.e., good accuracy and lighter computation.
 	<p align="center"><img src="./images/video_transformers/ViViT_5.png" width="400px"></img>
 
 
