@@ -157,6 +157,66 @@ This works propose several, efficient variants of our model which factorise the 
 ### Some Conclusion
 The authors find that the **Model 1** performs best on large-scale datasets such as K400 but tends to overfit more on smaller datasets. The **Model 1** requires more computation compared to others. It can be seen that [STAM](https://arxiv.org/pdf/2103.13915.pdf) style seems to be more efficient i.e., good accuracy and lighter computation.
 <p align="center"><img src="./images/video_transformers/ViViT_5.png" width="500px"></img>
+
+## [*(Google) VATT: Transformers for Multimodal Self-Supervised Learning from Raw Video, Audio and Text](https://arxiv.org/pdf/2104.11178.pdf)
+
+Code: To be added
+
+<p align="center"><img src="./images/video_transformers/VATT.png" width="600px"></img>
+
+### Overview
+This work presents a framework Video-AudioText Transformer (VATT) for learning multi-modal representation from unlabeled video data using convolution-free Transformer architectures. VATT extracts multi-modal representations by ingesting raw signals of videos, audios and texts. Following [MultiModal Versatile Networks](https://arxiv.org/pdf/2006.16228.pdf), VATT deﬁnes a semantically **hierarchical common space mapping** that enables us to directly compare video-audio pairs as well as video-text pairs by the cosine similarity.
+
+As seen in Fig. 1, each modality input is tokenized by each tokenization layer i.e., using three learnable weights. Then these tokens are fed to the Transformer. Two settings are investigated (modality-specific and modality-agnostic) 1) The backbone Transformers are separate and have speciﬁc weights for each modality, and 2) The Transformers share weights, namely, there is a single backbone Transformer applied to any of the modalities. 	
+
+### Some Thoughts
+* Results show that modality-specific architecture perform better. In the future, it would be interested to study data augmentation techniques to train the Transformer, and how to properly regularize the model, especially the modality-agnostic backbone, for diverse multi-modal tasks.
+
+
+## [(CVPR 2021) Multi-Scale Vision Longformer: A New Vision Transformer for High-Resolution Image Encoding](https://arxiv.org/pdf/2103.15358.pdf)
+
+Code: [Official PyTorch](https://github.com/microsoft/vision-longformer)
+
+<p align="center"><img src="./images/video_transformers/E-ViT.png" width="400px"></img>
+
+### Overview
+* Downsample resolution: Similart to concurrent work [Pyramid Vision Transformer (PVT)](https://arxiv.org/pdf/2102.12122.pdf), [Swin Transformer](https://arxiv.org/pdf/2103.14030.pdf) and [HanoNet](https://arxiv.org/pdf/2103.12731.pdf), this work processes the input in a hierarchical manner as seen in Fig. 1. The core part of this architecture is reduce the resolution in each stage by embedding new patches in each stage as seen in Table 2.  
+ 
+<p align="center"><img src="./images/video_transformers/E-ViT2.png" width="500px"></img>
+
+* Attention of global tokens and local tokens: the attention mechanism concatenates the global attention (position) and the local attention (image). 
+* CLS token’s feature vs global averaged feature: The choice makes no difference for ﬂat models. But the average-pooled feature performs better than the CLS feature for multi-scale models, especially for the multi-scale models with only one attention block.
+* Utilize the longformer to calculate the attention i.e., deeper model to increases the receptive field.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Explainability for Transformers
+* [(ICCV 2021) Generic Attention-model Explainability for Interpreting
+Bi-Modal and Encoder-Decoder Transformers](https://arxiv.org/pdf/2103.15679.pdf)
+
+* [(CVPR 2021) Transformer Interpretability Beyond Attention Visualization](https://arxiv.org/pdf/2012.09838.pdf)
+
+
+
+
+
+
+
 	
 	
 
